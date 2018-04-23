@@ -1,4 +1,5 @@
 ﻿open System
+open Microsoft.AspNetCore
 open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.AspNetCore.Builder
@@ -34,8 +35,7 @@ let configureApp (app : IApplicationBuilder) =
 
 [<EntryPoint>]
 let main argv =
-    WebHostBuilder()
-        .UseKestrel()
+    WebHost.CreateDefaultBuilder(argv)
         .ConfigureServices(configureServices)
         .Configure(Action<IApplicationBuilder> configureApp)
         .Build()
