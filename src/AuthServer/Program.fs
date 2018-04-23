@@ -2,12 +2,25 @@
 open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.AspNetCore.Builder
+open IdentityServer4.Models
 
-let apiResources = []
+let apiResources = [
+    ApiResource("justin", "Test resource")
+]
 
-let clients = []
+let clients = [
+    Client(
+        ClientId = "client",
+        AllowedGrantTypes = GrantTypes.ClientCredentials,
+        AllowedScopes = [|"justin"|],
+        ClientSecrets = [|
+            Secret("secret".Sha256())
+        |]
+    )
+]
 
 let configureServices (services : IServiceCollection) =
+    services.AddMvc() |> ignore
     services.AddIdentityServer()
         .AddDeveloperSigningCredential()
         .AddInMemoryApiResources(apiResources)
@@ -16,10 +29,11 @@ let configureServices (services : IServiceCollection) =
 let configureApp (app : IApplicationBuilder) =
     app.UseDeveloperExceptionPage() |> ignore
     app.UseIdentityServer() |> ignore
+    app.UseStaticFiles() |> ignore
+    app.UseMvcWithDefaultRoute() |> ignore
 
 [<EntryPoint>]
 let main argv =
-    printfn "Hello World from F#!"
     WebHostBuilder()
         .UseKestrel()
         .ConfigureServices(configureServices)
