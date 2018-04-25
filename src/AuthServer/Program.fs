@@ -22,6 +22,7 @@ type Startup() =
         services.AddIdentityServer()
             .AddDeveloperSigningCredential()
             .AddInMemoryApiResources(Config.apiResources)
+            .AddInMemoryIdentityResources(Config.identityResources)
             .AddInMemoryClients(Config.clients) |> ignore
     
     member __.Configure (app : IApplicationBuilder)
