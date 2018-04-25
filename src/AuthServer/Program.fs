@@ -14,21 +14,6 @@ let webApp =
         route "/ping"   >=> text "pong"
         route "/"       >=> razorView "text/html" "Home/Index" () ]
 
-let apiResources = [
-    ApiResource("justin", "Test resource")
-]
-
-let clients = [
-    Client(
-        ClientId = "client",
-        AllowedGrantTypes = GrantTypes.ClientCredentials,
-        AllowedScopes = [|"justin"|],
-        ClientSecrets = [|
-            Secret("secret".Sha256())
-        |]
-    )
-]
-
 type Startup() =
     member __.ConfigureServices (services : IServiceCollection) =
         let env = services.BuildServiceProvider().GetService<IHostingEnvironment>()
@@ -36,8 +21,8 @@ type Startup() =
         services.AddRazorEngine(viewsFolderPath) |> ignore
         services.AddIdentityServer()
             .AddDeveloperSigningCredential()
-            .AddInMemoryApiResources(apiResources)
-            .AddInMemoryClients(clients) |> ignore
+            .AddInMemoryApiResources(Config.apiResources)
+            .AddInMemoryClients(Config.clients) |> ignore
     
     member __.Configure (app : IApplicationBuilder)
                         (env : IHostingEnvironment)
