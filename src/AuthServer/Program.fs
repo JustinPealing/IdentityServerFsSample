@@ -11,8 +11,8 @@ open Giraffe.Razor
 
 let webApp =
     choose [
-        route "/ping"   >=> text "pong"
-        route "/"       >=> razorView "text/html" "Home/Index" () ]
+        route "/account/login"   >=> razorView "text/html" "Account/Login" ()
+        route "/"                >=> razorView "text/html" "Home/Index" () ]
 
 type Startup() =
     member __.ConfigureServices (services : IServiceCollection) =
