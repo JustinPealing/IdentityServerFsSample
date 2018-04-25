@@ -4,6 +4,12 @@ open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.AspNetCore.Builder
 open IdentityServer4.Models
+open Giraffe
+
+let webApp =
+    choose [
+        route "/ping"   >=> text "pong"
+        route "/"       >=> text "Hello, World!" ]
 
 let apiResources = [
     ApiResource("justin", "Test resource")
@@ -31,7 +37,7 @@ let configureApp (app : IApplicationBuilder) =
     app.UseDeveloperExceptionPage() |> ignore
     app.UseIdentityServer() |> ignore
     app.UseStaticFiles() |> ignore
-    app.UseMvcWithDefaultRoute() |> ignore
+    app.UseGiraffe webApp |> ignore
 
 [<EntryPoint>]
 let main argv =
