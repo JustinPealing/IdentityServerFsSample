@@ -2,7 +2,6 @@ module Config
 
 open IdentityServer4
 open IdentityServer4.Models
-open IdentityServer4.Test
 
 let apiResources = [
     ApiResource("justin", "Test resource")

@@ -1,6 +1,5 @@
 ﻿module AuthServer
 
-open System
 open System.IO
 open Microsoft.AspNetCore
 open Microsoft.AspNetCore.Builder
@@ -8,7 +7,6 @@ open Microsoft.AspNetCore.Http
 open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Logging
-open IdentityServer4.Models
 open Giraffe
 open Giraffe.Razor
 
