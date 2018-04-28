@@ -1,4 +1,6 @@
-﻿open System
+﻿module AuthServer
+
+open System
 open System.IO
 open Microsoft.AspNetCore
 open Microsoft.AspNetCore.Builder
@@ -10,9 +12,20 @@ open IdentityServer4.Models
 open Giraffe
 open Giraffe.Razor
 
+[<CLIMutable>]
+type LoginViewModel =
+    {
+        ReturnUrl : string
+    }
+
+let buildLoginViewModelAsync returnUrl =
+    { ReturnUrl = returnUrl }
+
 let getAccountLogin : HttpHandler = 
     fun (next : HttpFunc) (ctx : HttpContext) ->
-        razorHtmlView "Account/Login" () next ctx
+        let returnUrl = ctx.Request.Query.["returnUrl"].ToString()
+        let vm = buildLoginViewModelAsync(returnUrl)
+        razorHtmlView "Account/Login" vm next ctx
 
 let webApp =
     choose [
