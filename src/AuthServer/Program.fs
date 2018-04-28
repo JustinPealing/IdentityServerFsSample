@@ -1,18 +1,23 @@
 ﻿open System
 open System.IO
 open Microsoft.AspNetCore
+open Microsoft.AspNetCore.Builder
+open Microsoft.AspNetCore.Http
 open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Logging
-open Microsoft.AspNetCore.Builder
 open IdentityServer4.Models
 open Giraffe
 open Giraffe.Razor
 
+let getAccountLogin : HttpHandler = 
+    fun (next : HttpFunc) (ctx : HttpContext) ->
+        razorHtmlView "Account/Login" () next ctx
+
 let webApp =
     choose [
-        route "/account/login"   >=> razorView "text/html" "Account/Login" ()
-        route "/"                >=> razorView "text/html" "Home/Index" () ]
+        route "/account/login"   >=> getAccountLogin
+        route "/"                >=> razorHtmlView "Home/Index" () ]
 
 type Startup() =
     member __.ConfigureServices (services : IServiceCollection) =
