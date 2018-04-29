@@ -41,9 +41,7 @@ type Startup() =
             .AddInMemoryIdentityResources(Config.identityResources)
             .AddInMemoryClients(Config.clients) |> ignore
     
-    member __.Configure (app : IApplicationBuilder)
-                        (env : IHostingEnvironment)
-                        (loggerFactory : ILoggerFactory) =
+    member __.Configure (app : IApplicationBuilder) (env : IHostingEnvironment) (loggerFactory : ILoggerFactory) =
         app.UseDeveloperExceptionPage() |> ignore
         app.UseIdentityServer() |> ignore
         app.UseStaticFiles() |> ignore
