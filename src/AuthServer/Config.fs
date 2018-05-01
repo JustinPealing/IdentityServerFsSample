@@ -3,6 +3,9 @@ module Config
 open IdentityServer4
 open IdentityServer4.Models
 
+let windowsAuthenticationSchemeName = Microsoft.AspNetCore.Server.IISIntegration.IISDefaults.AuthenticationScheme
+let allowRememberLogin = true
+
 let apiResources = [
     ApiResource("justin", "Test resource")
 ]
